@@ -39,7 +39,7 @@ export class ProductosServices{
         return findOneProducto;
     }
 
-    async udpate(id: string, updateProductosDto: UpdateProductosDto): Promise<Productos>{
+    async update(id: string, updateProductosDto: UpdateProductosDto): Promise<Productos>{
         const updateProducto = await this.productosModel.findByIdAndUpdate(
             id,
             updateProductosDto,
@@ -52,7 +52,7 @@ export class ProductosServices{
     }
 
 
-    async udpatePartial(id: string, updateProductosDto: UpdateProductosDto): Promise<Productos>{
+    async updatePartial(id: string, updateProductosDto: UpdateProductosDto): Promise<Productos>{
         const updatePartialProducto = await this.productosModel.findByIdAndUpdate(
             id,
             updateProductosDto,
@@ -101,7 +101,7 @@ export class ProductosServices{
     }
 
      // Método para agregar un proveedor a un producto
-    async agregarProveedorAProducto(productoId: string, proveedorId: string): Promise<Productos> {
+    async addSupplierToProduct(productoId: string, proveedorId: string): Promise<Productos> {
         // Verificamos la existencia del producto
         const producto = await this.productosModel.findById(productoId);
         if (!producto) {
@@ -126,7 +126,7 @@ export class ProductosServices{
     }
 
 
-    async eliminarProveedorDeProducto(productoId: string, proveedorId: string): Promise<Productos> {
+    async removeSupplierFromProduct(productoId: string, proveedorId: string): Promise<Productos> {
         // Verificamos la existencia del producto
         const producto = await this.productosModel.findById(productoId);
         if (!producto) {
@@ -153,7 +153,7 @@ export class ProductosServices{
     }
 
 
-    async agregarClientesAProducto(productoId: string, clienteId: string): Promise<Productos>{
+    async addClientToProduct(productoId: string, clienteId: string): Promise<Productos>{
 
         // Verificamos la existencia del producto
         const producto = await this.productosModel.findById(productoId);
@@ -177,7 +177,7 @@ export class ProductosServices{
     }
 
 
-    async eliminarClientesDeProducto(productoId: string, clienteId: string): Promise<Productos>{
+    async removeClientFromProduct(productoId: string, clienteId: string): Promise<Productos>{
 
         // Verificamos la existencia del producto
         const producto = await this.productosModel.findById(productoId);

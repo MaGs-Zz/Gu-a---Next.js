@@ -13,87 +13,239 @@ import { ProductosServices } from '../services/productos.services';
 import { CreateProductoDto } from '../dto/create-productos.dto';
 import { UpdateProductosDto } from '../dto/udpate-productos.dto';
 import { Productos } from '../schema/productos.schema';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 
-@Controller('productos')
-export class ProductosControllers{
-    constructor(private readonly productosServices: ProductosServices){
-
-    }
+@ApiTags('Products')
+@Controller('products')
+export class ProductosControllers {
+    constructor(private readonly productsService: ProductosServices) {}
 
     @Post()
-    async create(@Body()createProductosDto: CreateProductoDto): Promise<Productos>{
-        return this.productosServices.createProducto(createProductosDto);
+    @ApiOperation({ summary: 'Create a new product' })
+    @ApiResponse({ status: 201, description: 'Product successfully created' })
+    @ApiResponse({ status: 400, description: 'Bad request' })
+    @ApiBody({
+        description: 'Data required to create a new product',
+        examples: {
+            example: {
+                summary: 'Example of creating a product',
+                value: {
+                    nombre_producto: 'Laptop',
+                    cantidad: 100,
+                    precio: 1500,
+                    proveedor: ['1234567890', '0987654321'],
+                    cliente: ['987654321'],
+                    activo: true
+                },
+            },
+        },
+    })
+    async create(@Body() createProductDto: CreateProductoDto): Promise<Productos> {
+        return this.productsService.createProducto(createProductDto);
     }
 
-    @Put('deactive/:id')
-    async deactive(@Param('id') id: string): Promise<void>{
-        await this.productosServices.deactive(id);
+    @Put('deactivate/:id')
+    @ApiOperation({ summary: 'Deactivate a product by ID' })
+    @ApiResponse({ status: 200, description: 'Product successfully deactivated' })
+    @ApiResponse({ status: 404, description: 'Product not found' })
+    @ApiParam({
+        name: 'id',
+        description: 'ID of the product you want to deactivate',
+        type: String,
+    })
+    async deactivate(@Param('id') id: string): Promise<void> {
+        await this.productsService.deactive(id);
     }
 
-    @Put('active/:id')
-    async active(@Param('id') id: string): Promise<void>{
-        await this.productosServices.active(id);
+    @Put('activate/:id')
+    @ApiOperation({ summary: 'Activate a product by ID' })
+    @ApiResponse({ status: 200, description: 'Product successfully activated' })
+    @ApiResponse({ status: 404, description: 'Product not found' })
+    @ApiParam({
+        name: 'id',
+        description: 'ID of the product you want to activate',
+        type: String,
+    })
+    async activate(@Param('id') id: string): Promise<void> {
+        await this.productsService.active(id);
     }
+
+    //////////
 
     @Delete('delete/:id')
-    async delete(@Param('id') id: string): Promise<void>{
-        await this.productosServices.delete(id);
+    @ApiOperation({ summary: 'Delete a product by ID' })
+    @ApiResponse({ status: 204, description: 'Product successfully deleted' })
+    @ApiResponse({ status: 404, description: 'Product not found' })
+    @ApiParam({
+        name: 'id',
+        description: 'ID of the product you want to delete',
+        type: String,
+    })
+    async delete(@Param('id') id: string): Promise<void> {
+        await this.productsService.delete(id);
     }
-
 
     @Get()
-    async findAll(): Promise<Productos[]>{
-        return await this.productosServices.findAllProdutos();
+    @ApiOperation({ summary: 'Retrieve the list of all products' })
+    @ApiResponse({ status: 200, description: 'List of products successfully retrieved' })
+    async findAll(): Promise<Productos[]> {
+        return await this.productsService.findAllProdutos();
     }
-
 
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<Productos>{
-        console.log('ID recibido:', id); // Agrega esto para depurar
-        return await this.productosServices.findOne(id);
+    @ApiOperation({ summary: 'Retrieve a product by ID' })
+    @ApiResponse({ status: 200, description: 'Product found' })
+    @ApiResponse({ status: 404, description: 'Product not found' })
+    @ApiParam({
+        name: 'id',
+        description: 'ID of the product you want to retrieve',
+        type: String,
+    })
+    async findOne(@Param('id') id: string): Promise<Productos> {
+        console.log('Received ID:', id); // Added for debugging
+        return await this.productsService.findOne(id);
     }
 
+    ////////
+
     @Put('update/:id')
-    async udpate(@Param('id') id: string, @Body() updateProductosDto: UpdateProductosDto): Promise<Productos>{
-        const updateProducto = await this.productosServices.udpate(id, updateProductosDto);
-        if(!updateProducto){
-            throw new NotFoundException(`Producto con Id ${id} no se encontro`);
+    @ApiOperation({ summary: 'Update a product by ID' })
+    @ApiResponse({ status: 200, description: 'Product successfully updated' })
+    @ApiResponse({ status: 404, description: 'Product not found' })
+    @ApiBody({
+        description: 'Data required to update a product',
+        examples: {
+            example: {
+                summary: 'Example of updating a product',
+                value: {
+                    nombre_producto: 'Updated Product',
+                    cantidad: 100,
+                    precio: 150.5,
+                    activo: true,
+                    proveedor: ['supplier1', 'supplier2'],
+                    cliente: ['client1'],
+                },
+            },
+        },
+    })
+    async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductosDto): Promise<Productos> {
+        const updatedProduct = await this.productsService.update(id, updateProductDto);
+        if (!updatedProduct) {
+            throw new NotFoundException(`Product with ID ${id} not found`);
         }
-        return updateProducto
+        return updatedProduct;
     }
 
     @Patch('updatePartial/:id')
-    async udpatePartial(@Param('id') id: string, @Body() updateProductosDto: UpdateProductosDto): Promise<Productos>{
-        const updatePartialProducto = await this.productosServices.udpatePartial(id, updateProductosDto);
-        if(!updatePartialProducto){
-            throw new NotFoundException(`Producto con Id ${id} no se encontro`);
+    @ApiOperation({ summary: 'Partially update a product by ID' })
+    @ApiResponse({ status: 200, description: 'Product partially updated successfully' })
+    @ApiResponse({ status: 404, description: 'Product not found' })
+    @ApiBody({
+        description: 'Data required for partial update of a product',
+        examples: {
+            example: {
+                summary: 'Example of partial update of a product',
+                value: {
+                    precio: 180.5,
+                    cantidad: 120,
+                },
+            },
+        },
+    })
+    async updatePartial(@Param('id') id: string, @Body() updateProductDto: UpdateProductosDto): Promise<Productos> {
+        const updatedPartialProduct = await this.productsService.updatePartial(id, updateProductDto);
+        if (!updatedPartialProduct) {
+            throw new NotFoundException(`Product with ID ${id} not found`);
         }
-        return updatePartialProducto
+        return updatedPartialProduct;
     }
 
-    // Ruta para agregar un proveedor a un producto
-    @Patch(':productoId/proveedores/:proveedorId')
-    async agregarProveedorProducto(
-        @Param('productoId') productoId: string,
-        @Param('proveedorId') proveedorId: string,
+    @Patch(':productId/suppliers/:supplierId')
+    @ApiOperation({ summary: 'Add a supplier to a product' })
+    @ApiResponse({ status: 200, description: 'Supplier successfully added to the product' })
+    @ApiResponse({ status: 404, description: 'Product or supplier not found' })
+    @ApiParam({
+        name: 'productId',
+        description: 'ID of the product to which the supplier will be added',
+        type: String,
+    })
+    @ApiParam({
+        name: 'supplierId',
+        description: 'ID of the supplier to be added to the product',
+        type: String,
+    })
+    async addSupplierToProduct(
+        @Param('productId') productId: string,
+        @Param('supplierId') supplierId: string,
     ): Promise<Productos> {
-        return await this.productosServices.agregarProveedorAProducto(productoId, proveedorId);
+        return await this.productsService.addSupplierToProduct(productId, supplierId);
     }
 
-    @Patch(':productoId/proveedores/:proveedorId/eliminar')
-    async eliminarProveedorProducto(@Param('productoId') productoId: string, @Param('proveedorId') proveedorId: string): Promise<Productos> {
-        return await this.productosServices.eliminarProveedorDeProducto(productoId, proveedorId);
+    /////////////
+
+    @Patch(':productId/suppliers/:supplierId/remove')
+    @ApiOperation({ summary: 'Remove a supplier from a product by their ID' })
+    @ApiResponse({ status: 200, description: 'Supplier successfully removed from the product' })
+    @ApiResponse({ status: 404, description: 'Product or supplier not found' })
+    @ApiParam({
+        name: 'productId',
+        description: 'ID of the product from which the supplier will be removed',
+        type: String,
+    })
+    @ApiParam({
+        name: 'supplierId',
+        description: 'ID of the supplier to be removed from the product',
+        type: String,
+    })
+    async removeSupplierFromProduct(
+        @Param('productId') productId: string, 
+        @Param('supplierId') supplierId: string
+    ): Promise<Productos> {
+        return await this.productsService.removeSupplierFromProduct(productId, supplierId);
     }
 
-    @Patch(':productoId/clientes/:clienteId')
-    async agregarClienteAProducto(@Param('productoId') productoId: string,@Param('clienteId') clienteId: string): Promise<Productos>{
-        
-        return await this.productosServices.agregarClientesAProducto(productoId, clienteId);
+    @Patch(':productId/clients/:clientId')
+    @ApiOperation({ summary: 'Add a client to a product by their ID' })
+    @ApiResponse({ status: 200, description: 'Client successfully added to the product' })
+    @ApiResponse({ status: 404, description: 'Product or client not found' })
+    @ApiParam({
+        name: 'productId',
+        description: 'ID of the product to which the client will be added',
+        type: String,
+    })
+    @ApiParam({
+        name: 'clientId',
+        description: 'ID of the client to be added to the product',
+        type: String,
+    })
+
+    async addClientToProduct(
+        @Param('productId') productId: string, 
+        @Param('clientId') clientId: string
+    ): Promise<Productos> {
+        return await this.productsService.addClientToProduct(productId, clientId);
     }
 
-    @Patch(':productoId/clientes/:clienteId/eliminar')
-    async eliminarCLienteDeProducto(@Param('productoId') productoId: string, @Param('clienteId') clienteId: string): Promise<Productos>{
-        return await this.productosServices.eliminarClientesDeProducto(productoId, clienteId);
-    }
+    @Patch(':productId/clients/:clientId/remove')
+    @ApiOperation({ summary: 'Remove a client from a product by their ID' })
+    @ApiResponse({ status: 200, description: 'Client successfully removed from the product' })
+    @ApiResponse({ status: 404, description: 'Product or client not found' })
+    @ApiParam({
+        name: 'productId',
+        description: 'ID of the product from which the client will be removed',
+        type: String,
+    })
+    @ApiParam({
+        name: 'clientId',
+        description: 'ID of the client to be removed from the product',
+        type: String,
+    })
 
+
+    async removeClientFromProduct(
+        @Param('productId') productId: string, 
+        @Param('clientId') clientId: string
+    ): Promise<Productos> {
+        return await this.productsService.removeClientFromProduct(productId, clientId);
+    }
 }
