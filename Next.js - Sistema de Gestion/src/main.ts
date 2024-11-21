@@ -17,8 +17,8 @@ async function bootstrap() {
 
    // Configuración de Swagger
   const config = new DocumentBuilder()
-  .setTitle('API Sistema de gestión ')
-  .setDescription('Se vera las APIs de nuestro sistema')
+  .setTitle('API Swagger ')
+  .setDescription('XD')
   .setVersion('1.0.0')
   .build();
   const document = SwaggerModule.createDocument(app, config);
@@ -27,6 +27,6 @@ async function bootstrap() {
     console.log(`Documentación de Swagger está disponible en: http://localhost:3000/api`);
 
 
-  await app.listen(2000);
+  await app.listen(3000);
 }
 bootstrap();

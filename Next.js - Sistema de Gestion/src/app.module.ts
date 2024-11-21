@@ -4,12 +4,9 @@ import { ProveedoresModule } from './module/proveedores/proveedores.module';
 import { ClientesModule } from './module/clientes/clientes.module';
 import { ProductosModule } from './module/productos/productos.module';
 
-//MongooseModule.forRoot('mongodb+srv://juliriveraquintero:3bAwpBHC9iNii0UQ@pruebas.1hkhp.mongodb.net/PruebasNestJS?retryWrites=true&w=majority&appName=Pruebas'),
-
-
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/Prueba'),
+    MongooseModule.forRoot('mongodb+srv://miguelgomezan439:MZDTwGmwJFaNUXng@cluster0.fjqxn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'),
     ProveedoresModule,
     ClientesModule,
     ProductosModule,
