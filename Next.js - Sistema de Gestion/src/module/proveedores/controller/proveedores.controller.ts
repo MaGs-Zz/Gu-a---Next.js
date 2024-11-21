@@ -1,4 +1,4 @@
-import { 
+import {  
     Controller, 
     Post, 
     Body, 
@@ -15,11 +15,11 @@ import { CreateProveedoresDto } from '../dto/create-proveedores.dto';
 import { UpdateProveedoresDto } from '../dto/update-proveedores.dto';
 import { Proveedores } from '../schema/proveedores.schema';
 
-// Importacion necesaria para documentar en swagger para los endpoints
+// Required import for documenting endpoints in Swagger
 import { ApiTags, ApiResponse, ApiOperation, ApiBody, ApiParam } from '@nestjs/swagger';
 
-@ApiTags('Proveedor') // Etiqueta para agrupar endpoints en la documentacion
-@Controller('proveedores') // Ruta base
+@ApiTags('Supplier') // Tag to group endpoints in the documentation
+@Controller('suppliers') // Base route
 export class ProveedoresController{
 
 
@@ -28,92 +28,90 @@ export class ProveedoresController{
 
     }
     
-
-
-    //Controlador para crear el Proveedor
+    // Controller to create a Supplier
     @Post()
-    // Descripción del endpoint
-    @ApiOperation({summary: 'Crear un nuevo proveedor'}) 
-    // Respuesta exitosa
-    @ApiResponse({status: 201, description: 'El proveedor ha sido creado'}) 
-    // Respueta de error
-    @ApiResponse({status: 400, description: 'Solicitud incorrecta'})
-    // Cuerpo del endpoint
+    // Endpoint description
+    @ApiOperation({summary: 'Create a new supplier'}) 
+    // Success response
+    @ApiResponse({status: 201, description: 'The supplier has been created'}) 
+    // Error response
+    @ApiResponse({status: 400, description: 'Bad request'})
+    // Request body description
     @ApiBody({
-        description: 'Cuerpo de solicitud para crear un nuevo proveedor',
+        description: 'Request body to create a new supplier',
         examples:{
             example:{
-                summary: 'Ejemplo de crearción',
+                summary: 'Creation example',
                 value:{
-                    nombre_proveedor: 'Nombre__Proveedor',
-                    email_proveedor: 'proveedor@gmail.com',
-                    celular_proveedor: '1234567890'
+                    supplier_name: 'Supplier_Name',
+                    supplier_email: 'supplier@gmail.com',
+                    supplier_phone: '1234567890'
                 }
             }
         }
     })
-    async craete(@Body() createProveedorDto: CreateProveedoresDto): Promise<Proveedores>{
+    async create(@Body() createProveedorDto: CreateProveedoresDto): Promise<Proveedores>{
         return  this.proveedoresServies.createProveedor(createProveedorDto);
     }
 
 
-    //Controlador para desactivar
-    @Put('deactive/:id')
-    //Descripcion del endpoint
-    @ApiOperation({summary:'Desctivar un proveedor'})
-    //Respuesta exitosa
-    @ApiResponse({status: 204, description: 'Proveedor desactivado'})
-    //Resíesta de error
-    @ApiResponse({status:400, description:'No se encuentra el proveedor'})
-    // Respuesta de error
-    @ApiResponse({status:404, description:'Solicitud incorrecta'})
+    // Controller to deactivate a supplier
+    @Put('deactivate/:id')
+    // Endpoint description
+    @ApiOperation({summary:'Deactivate a supplier'})
+    // Success response
+    @ApiResponse({status: 204, description: 'Supplier deactivated'})
+    // Error response
+    @ApiResponse({status:400, description:'Supplier not found'})
+    // Error response
+    @ApiResponse({status:404, description:'Bad request'})
     @ApiParam({
         name: 'id',
         required: true,
-        description: 'Id del proveedor que desea desactivar',
+        description: 'ID of the supplier to deactivate',
         type: String,
     })
-    async deactive(@Param('id') id: string): Promise<void>{
-        await this.proveedoresServies.deactive(id);
+    async deactivate(@Param('id') id: string): Promise<void>{
+        await this.proveedoresServies.deactivate(id);
     }
 
 
-     //Controlador para Activar
-    @Put('active/:id')
-    //Descripcion del endpoint
-    @ApiOperation({summary:'Activar un proveedor'})
-    //Respuesta exitosa
-    @ApiResponse({status: 204, description: 'Proveedor activado'})
-    //Resíesta de error
-    @ApiResponse({status:400, description:'No se encuentra el proveedor'})
-    // Respuesta de error
-    @ApiResponse({status:404, description:'Solicitud incorrecta'})
+     // Controller to activate a supplier
+    @Put('activate/:id')
+    // Endpoint description
+    @ApiOperation({summary:'Activate a supplier'})
+    // Success response
+    @ApiResponse({status: 204, description: 'Supplier activated'})
+    // Error response
+    @ApiResponse({status:400, description:'Supplier not found'})
+    // Error response
+    @ApiResponse({status:404, description:'Bad request'})
     @ApiParam({
         name: 'id',
         required: true,
-        description: 'Id del proveedor que desea activar',
+        description: 'ID of the supplier to activate',
         type: String,
     })
-    async active(@Param('id') id: string): Promise<void>{
-        await this.proveedoresServies.active(id);
+    async activate(@Param('id') id: string): Promise<void>{
+        await this.proveedoresServies.activate(id);
     }
 
 
 
-    //Controlador para eliminar
+    // Controller to delete a supplier
     @Delete('delete/:id')
-        //Descripcion del endpoint
-        @ApiOperation({summary:'Eliminar un proveedor'})
-        //Respuesta exitosa
-        @ApiResponse({status: 204, description: 'Proveedor eliminado'})
-        //Respuesta de error
-        @ApiResponse({status:400, description:'No se encuentra el proveedor'})
-        // Respuesta de error
-        @ApiResponse({status:404, description:'Solicitud incorrecta'})
+        // Endpoint description
+        @ApiOperation({summary:'Delete a supplier'})
+        // Success response
+        @ApiResponse({status: 204, description: 'Supplier deleted'})
+        // Error response
+        @ApiResponse({status:400, description:'Supplier not found'})
+        // Error response
+        @ApiResponse({status:404, description:'Bad request'})
         @ApiParam({
             name: 'id',
             required: true,
-            description: 'Id del proveedor que desea eliminar',
+            description: 'ID of the supplier to delete',
             type: String,
         })
     async delete(@Param('id') id: string): Promise<void>{
@@ -121,33 +119,33 @@ export class ProveedoresController{
     }
 
 
-    //Controlador para obtener todos los proveedores
+    // Controller to get all suppliers
     @Get()
-    //Descripcion endpoint
-    @ApiOperation({summary: 'Obtener todos los proveedores'})
-    // Respuesta de exito
-    @ApiResponse({status:200, description: 'Lista de proveedores ', type:[Proveedores] })
-    // Respuesta de error
-    @ApiResponse({status: 404, description: 'Paises no encontrados'})
+    // Endpoint description
+    @ApiOperation({summary: 'Get all suppliers'})
+    // Success response
+    @ApiResponse({status:200, description: 'List of suppliers', type:[Proveedores] })
+    // Error response
+    @ApiResponse({status: 404, description: 'Suppliers not found'})
     async findAll(): Promise<Proveedores[]>{
         return await this.proveedoresServies.findAll();
     }
 
 
-    //Controlador para obtener por id
+    // Controller to get a supplier by id
     @Get(':id')
-    //Descripcion del endpoint
-    @ApiOperation({summary:'Obtener un proveedor por su Id'})
-    //Respuesta exitosa
-    @ApiResponse({status: 204, description: 'Proveedor encontrado'})
-    //Respuesta de error
-    @ApiResponse({status:400, description:'No se encuentra el proveedor'})
-    // Respuesta de error
-    @ApiResponse({status:404, description:'Solicitud incorrecta'})
+    // Endpoint description
+    @ApiOperation({summary:'Get a supplier by its ID'})
+    // Success response
+    @ApiResponse({status: 204, description: 'Supplier found'})
+    // Error response
+    @ApiResponse({status:400, description:'Supplier not found'})
+    // Error response
+    @ApiResponse({status:404, description:'Bad request'})
     @ApiParam({
         name: 'id',
         required: true,
-        description: 'Id del proveedor que desea obtener',
+        description: 'ID of the supplier to retrieve',
         type: String,
     })
     async findOne(@Param('id') id: string): Promise<Proveedores>{
@@ -155,27 +153,27 @@ export class ProveedoresController{
     }
 
 
-    //Controlador para actualizar todo el proveedor
+    // Controller to update the entire supplier
     @Put('update/:id')
 
-    // Descripción del endpoint
-    @ApiOperation({summary: 'Actualizar de un proveedor'}) 
-    // Respuesta exitosa
-    @ApiResponse({status: 201, description: 'El proveedor ha sido actualizado'}) 
-    // Respueta de error
-    @ApiResponse({status: 400, description: 'No se encuentra el proveedor'})
-    // Respuesta de error
-    @ApiResponse({status:404, description:'Solicitud incorrecta'})
-    // Cuerpo del endpoint
+    // Endpoint description
+    @ApiOperation({summary: 'Update a supplier'}) 
+    // Success response
+    @ApiResponse({status: 201, description: 'The supplier has been updated'}) 
+    // Error response
+    @ApiResponse({status: 400, description: 'Supplier not found'})
+    // Error response
+    @ApiResponse({status:404, description:'Bad request'})
+    // Request body description
     @ApiBody({
-        description: 'Cuerpo de solicitud para actualizar un nuevo proveedor',
+        description: 'Request body to update a supplier',
         examples:{
             example:{
-                summary: 'Ejemplo de actualización',
+                summary: 'Update example',
                 value:{
-                    nombre_proveedor: 'Proveedor_actualizado',
-                    email_proveedor: 'proveedorudpate@gmail.com',
-                    celular_proveedor: '1234567'
+                    supplier_name: 'Updated_Supplier',
+                    supplier_email: 'updatedsupplier@gmail.com',
+                    supplier_phone: '1234567'
                 }
             }
         }
@@ -184,30 +182,30 @@ export class ProveedoresController{
     async update(@Param('id') id: string, @Body() updateProveedoresDto: UpdateProveedoresDto): Promise<Proveedores>{
         const updateProveedor = await this.proveedoresServies.update(id, updateProveedoresDto);
         if(!updateProveedor){
-            throw new NotFoundException(`Proveedor con Id ${id} no se encontro`);
+            throw new NotFoundException(`Supplier with ID ${id} not found`);
         }
         return updateProveedor;
     }
 
     @Patch('updatePartial/:id')
-    // Descripción del endpoint
-    @ApiOperation({summary: 'Actualizar de un proveedor parcialmente'}) 
-    // Respuesta exitosa
-    @ApiResponse({status: 201, description: 'El proveedor ha sido actualizado'}) 
-    // Respueta de error
-    @ApiResponse({status: 400, description: 'No se encuentra el proveedor'})
-    // Respuesta de error
-    @ApiResponse({status:404, description:'Solicitud incorrecta'})
-    // Cuerpo del endpoint
+    // Endpoint description
+    @ApiOperation({summary: 'Partially update a supplier'}) 
+    // Success response
+    @ApiResponse({status: 201, description: 'The supplier has been updated'}) 
+    // Error response
+    @ApiResponse({status: 400, description: 'Supplier not found'})
+    // Error response
+    @ApiResponse({status:404, description:'Bad request'})
+    // Request body description
     @ApiBody({
-        description: 'Cuerpo de solicitud para actualizar un nuevo proveedor',
+        description: 'Request body to partially update a supplier',
         examples:{
             example:{
-                summary: 'Ejemplo de actualización',
+                summary: 'Partial update example',
                 value:{
-                    nombre_proveedor: 'Proveedor_actualizacionParcial',
-                    email_proveedor: 'proveedorudpateparcial@gmail.com',
-                    celular_proveedor: '12345674354'
+                    supplier_name: 'Partial_Update_Supplier',
+                    supplier_email: 'partialupdate@gmail.com',
+                    supplier_phone: '12345674354'
                 }
             }
         }
@@ -215,7 +213,7 @@ export class ProveedoresController{
     async updatePartial(@Param('id') id: string, @Body() updateProveedoresDto: UpdateProveedoresDto): Promise<Proveedores>{
         const updatePartialProveedor = await this.proveedoresServies.updatePartial(id, updateProveedoresDto);
         if(!updatePartialProveedor){
-            throw new NotFoundException(`Proveedor con Id ${id} no se encontro`);
+            throw new NotFoundException(`Supplier with ID ${id} not found`);
         }
         return updatePartialProveedor;
     }

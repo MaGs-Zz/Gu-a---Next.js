@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { IProveedores } from '../interface/proveedores.interface';
+
 @Schema()
 export class Proveedores extends Document implements IProveedores{
     @Prop({required: true})

@@ -1,7 +1,3 @@
-
-
-
-
 export interface IProveedores{
     id?: string;
     nombre_proveedor: string;
