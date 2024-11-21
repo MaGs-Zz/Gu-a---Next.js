@@ -15,139 +15,139 @@ import { ClientesService } from '../service/clientes.service';
 import { Clientes } from '../schema/clientes.schema';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 
-@ApiTags('clientes')
-@Controller('clientes') // Define la ruta base
+@ApiTags('Clients')
+@Controller('clients') // Defines the base route
 export class ClientesController {
-    constructor(private readonly clientesService: ClientesService) {}
+    constructor(private readonly clientsService: ClientesService) {}
 
     @Post()
-    @ApiOperation({ summary: 'Crear un nuevo cliente' })
-    @ApiResponse({ status: 201, description: 'Cliente creado con éxito' })
-    @ApiResponse({ status: 400, description: 'Solicitud incorrecta' })
+    @ApiOperation({ summary: 'Create a new client' })
+    @ApiResponse({ status: 201, description: 'Client successfully created' })
+    @ApiResponse({ status: 400, description: 'Bad request' })
     @ApiBody({
-        description: 'Datos necesarios para crear un nuevo cliente',
+        description: 'Data required to create a new client',
         examples: {
             example: {
-                summary: 'Ejemplo de creación de cliente',
+                summary: 'Example of creating a client',
                 value: {
-                    numero_identificacion: '123456789',
-                    nombre_cliente: 'Santiago Avila',
-                    email_cliente: 'juan.perez@gmail.com',
-                    celular_cliente: '555-1234',
-                    activo_cliente: true
+                    identification_number: '987654321',
+                    client_name: 'MaGs MaGs',
+                    client_email: 'mags.mags@gmail.com',
+                    client_phone: '987-6543',
+                    client_active: true
                 },
             },
         },
     })
-    async create(@Body() createClientesDto: CreateClientesDto): Promise<Clientes> {
-        return this.clientesService.createCliente(createClientesDto);
+    async create(@Body() createClientsDto: CreateClientesDto): Promise<Clientes> {
+        return this.clientsService.createCliente(createClientsDto);
     }
 
     @Get(':id')
-    @ApiOperation({ summary: 'Obtener un cliente por ID' })
-    @ApiResponse({ status: 200, description: 'Cliente encontrado' })
-    @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
+    @ApiOperation({ summary: 'Retrieve a client by ID' })
+    @ApiResponse({ status: 200, description: 'Client found' })
+    @ApiResponse({ status: 404, description: 'Client not found' })
     @ApiParam({
         name: 'id',
-        description: 'ID del cliente que deseas obtener',
+        description: 'ID of the client you want to retrieve',
         type: String,
     })
     async findOne(@Param('id') id: string): Promise<Clientes> {
-        return await this.clientesService.findOne(id);
+        return await this.clientsService.findOne(id);
     }
 
     @Get()
-    @ApiOperation({ summary: 'Obtener la lista de todos los clientes' })
-    @ApiResponse({ status: 200, description: 'Lista de clientes obtenida con éxito' })
+    @ApiOperation({ summary: 'Retrieve the list of all clients' })
+    @ApiResponse({ status: 200, description: 'List of clients successfully retrieved' })
     async findAll(): Promise<Clientes[]> {
-        return await this.clientesService.findAll();
+        return await this.clientsService.findAll();
     }
 
-    @Put('active/:id')
-    @ApiOperation({ summary: 'Activar un cliente por ID' })
-    @ApiResponse({ status: 200, description: 'Cliente activado con éxito' })
-    @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
+    @Put('activate/:id')
+    @ApiOperation({ summary: 'Activate a client by ID' })
+    @ApiResponse({ status: 200, description: 'Client successfully activated' })
+    @ApiResponse({ status: 404, description: 'Client not found' })
     @ApiParam({
         name: 'id',
-        description: 'ID del cliente que deseas activar',
+        description: 'ID of the client you want to activate',
         type: String,
     })
-    async active(@Param('id') id: string): Promise<void> {
-        await this.clientesService.active(id);
+    async activate(@Param('id') id: string): Promise<void> {
+        await this.clientsService.active(id);
     }
     
     @Put('update/:id')
-    @ApiOperation({ summary: 'Actualizar un cliente por ID' })
-    @ApiResponse({ status: 200, description: 'Cliente actualizado con éxito' })
-    @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
+    @ApiOperation({ summary: 'Update a client by ID' })
+    @ApiResponse({ status: 200, description: 'Client successfully updated' })
+    @ApiResponse({ status: 404, description: 'Client not found' })
     @ApiBody({
-        description: 'Datos necesarios para actualizar un cliente',
+        description: 'Data required to update a client',
         examples: {
             example: {
-                summary: 'Ejemplo de actualización de cliente',
+                summary: 'Example of updating a client',
                 value: {
-                    nombre_cliente: 'Juan Pérez Actualizado',
-                    email_cliente: 'nuevo.email@gmail.com',
-                    celular_cliente: '555-9876',
-                    activo_cliente: false
+                    client_name: 'MaGs Updated',
+                    client_email: 'updated.email@gmail.com',
+                    client_phone: '123-4567',
+                    client_active: false
                 },
             },
         },
     })
-    async update(@Param('id') id: string, @Body() updateClientesDto: UpdateClientesDto): Promise<Clientes> {
-        const updatedCliente = await this.clientesService.update(id, updateClientesDto);
-        if (!updatedCliente) {
-            throw new NotFoundException(`Cliente con ID ${id} no encontrado`);
+    async update(@Param('id') id: string, @Body() updateClientsDto: UpdateClientesDto): Promise<Clientes> {
+        const updatedClient = await this.clientsService.update(id, updateClientsDto);
+        if (!updatedClient) {
+            throw new NotFoundException(`Client with ID ${id} not found`);
         }
-        return updatedCliente;
+        return updatedClient;
     }
 
     @Patch('updatePartial/:id')
-    @ApiOperation({ summary: 'Actualizar parcialmente un cliente por ID' })
-    @ApiResponse({ status: 200, description: 'Cliente actualizado parcialmente con éxito' })
-    @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
+    @ApiOperation({ summary: 'Partially update a client by ID' })
+    @ApiResponse({ status: 200, description: 'Client partially updated successfully' })
+    @ApiResponse({ status: 404, description: 'Client not found' })
     @ApiBody({
-        description: 'Datos necesarios para una actualización parcial del cliente',
+        description: 'Data required for a partial update of the client',
         examples: {
             example: {
-                summary: 'Ejemplo de actualización parcial',
+                summary: 'Example of partial update',
                 value: {
-                    celular_cliente: '555-5555',
+                    client_phone: '555-8888',
                 },
             },
         },
     })
-    async updatePartial(@Param('id') id: string, @Body() updateClientesDto: Partial<UpdateClientesDto>): Promise<Clientes> {
-        const updatedPartialCliente = await this.clientesService.updatePartial(id, updateClientesDto);
-        if (!updatedPartialCliente) {
-            throw new NotFoundException(`Cliente con ID ${id} no encontrado`);
+    async updatePartial(@Param('id') id: string, @Body() updateClientsDto: Partial<UpdateClientesDto>): Promise<Clientes> {
+        const updatedPartialClient = await this.clientsService.updatePartial(id, updateClientsDto);
+        if (!updatedPartialClient) {
+            throw new NotFoundException(`Client with ID ${id} not found`);
         }
-        return updatedPartialCliente;
+        return updatedPartialClient;
     }
 
     @Delete('delete/:id')
-    @ApiOperation({ summary: 'Eliminar un cliente por ID' })
-    @ApiResponse({ status: 204, description: 'Cliente eliminado con éxito' })
-    @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
+    @ApiOperation({ summary: 'Delete a client by ID' })
+    @ApiResponse({ status: 204, description: 'Client successfully deleted' })
+    @ApiResponse({ status: 404, description: 'Client not found' })
     @ApiParam({
         name: 'id',
-        description: 'ID del cliente que deseas eliminar',
+        description: 'ID of the client you want to delete',
         type: String,
     })
     async remove(@Param('id') id: string): Promise<void> {
-        await this.clientesService.delete(id);
+        await this.clientsService.delete(id);
     }
 
     @Put('deactivate/:id')
-    @ApiOperation({ summary: 'Desactivar un cliente por ID' })
-    @ApiResponse({ status: 200, description: 'Cliente desactivado con éxito' })
-    @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
+    @ApiOperation({ summary: 'Deactivate a client by ID' })
+    @ApiResponse({ status: 200, description: 'Client successfully deactivated' })
+    @ApiResponse({ status: 404, description: 'Client not found' })
     @ApiParam({
         name: 'id',
-        description: 'ID del cliente que deseas desactivar',
+        description: 'ID of the client you want to deactivate',
         type: String,
     })
     async deactivate(@Param('id') id: string): Promise<void> {
-        await this.clientesService.deactivate(id);
+        await this.clientsService.deactivate(id);
     }
 }
