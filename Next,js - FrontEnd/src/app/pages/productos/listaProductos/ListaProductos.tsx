@@ -50,7 +50,7 @@ const style = {
 };
 
 const ProductoLista: React.FC = () => {
-  const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState<Productos[]>([]);
   const [nuevoProducto, setNuevoProducto] = useState<Omit<Productos, '_id'>>({
     nombre_producto: '',
     cantidad: 0,
@@ -72,25 +72,25 @@ const ProductoLista: React.FC = () => {
   const [producto, setProducto] = useState<Productos | null>(null);
 
   const obtenerClientes = async () => {
-    const response = await fetch('http://localhost:3000/api/clientes');
+    const response = await fetch('https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/clients');
     const data = await response.json();
     setClientes(data);
   };
 
   const obtenerProveedores = async () => {
-    const response = await fetch('http://localhost:3000/api/proveedores');
+    const response = await fetch('https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/suppliers');
     const data = await response.json();
     setProveedores(data);
   };
 
   const obtenerProductos = async () => {
-    const response = await fetch('http://localhost:3000/api/productos');
+    const response = await fetch('https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products');
     const data = await response.json();
     setProductos(data);
   };
 
   const crearProducto = async (data: Omit<Productos, '_id'>) => {
-    const response = await fetch('http://localhost:3000/api/productos', {
+    const response = await fetch('https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ const ProductoLista: React.FC = () => {
       cancelButtonText: 'Cancelar',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await fetch(`http://localhost:3000/api/productos/delete/${id}`, {
+        const response = await fetch(`https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products/delete/${id}`, {
           method: 'DELETE',
         });
 
@@ -192,7 +192,7 @@ const ProductoLista: React.FC = () => {
   };
 
   const actualizarProducto = async (id: string, data: Omit<Productos, 'id'>) => {
-    const response = await fetch(`http://localhost:3000/api/productos/update/${id}`, {
+    const response = await fetch(`https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -247,7 +247,7 @@ const ProductoLista: React.FC = () => {
 
   const toggleActivo = async (id: string, activo: boolean) => {
     const response = await fetch(
-      `http://localhost:3000/api/productos/${activo ? 'deactivate' : 'activate'}/${id}`,
+      `https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products/${activo ? 'deactivate' : 'activate'}/${id}`,
       {
         method: 'PUT',
       }
