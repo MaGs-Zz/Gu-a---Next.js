@@ -43,9 +43,9 @@ export class ProveedoresController{
             example:{
                 summary: 'Creation example',
                 value:{
-                    supplier_name: 'Supplier_Name',
-                    supplier_email: 'supplier@gmail.com',
-                    supplier_phone: '1234567890'
+                    nombre_proveedor: 'Supplier_Name',
+                    email_proveedor: 'supplier@gmail.com',
+                    celular_proveedor: '1234567890'
                 }
             }
         }
@@ -71,8 +71,8 @@ export class ProveedoresController{
         description: 'ID of the supplier to deactivate',
         type: String,
     })
-    async deactivate(@Param('id') id: string): Promise<void>{
-        await this.proveedoresServies.deactivate(id);
+    async deactive(@Param('id') id: string): Promise<void>{
+        await this.proveedoresServies.deactive(id);
     }
 
 
@@ -92,8 +92,8 @@ export class ProveedoresController{
         description: 'ID of the supplier to activate',
         type: String,
     })
-    async activate(@Param('id') id: string): Promise<void>{
-        await this.proveedoresServies.activate(id);
+    async active(@Param('id') id: string): Promise<void>{
+        await this.proveedoresServies.active(id);
     }
 
 
@@ -171,9 +171,9 @@ export class ProveedoresController{
             example:{
                 summary: 'Update example',
                 value:{
-                    supplier_name: 'Updated_Supplier',
-                    supplier_email: 'updatedsupplier@gmail.com',
-                    supplier_phone: '1234567'
+                    nombre_proveedor: 'Updated_Supplier',
+                    email_proveedor: 'updatedsupplier@gmail.com',
+                    celular_proveedor: '1234567'
                 }
             }
         }

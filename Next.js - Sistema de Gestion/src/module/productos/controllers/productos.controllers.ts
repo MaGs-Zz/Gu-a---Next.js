@@ -1,11 +1,11 @@
-import { 
-    Controller, 
-    Post, 
-    Body, 
-    Delete, 
-    Param, 
-    NotFoundException, 
-    Get, 
+import {
+    Controller,
+    Post,
+    Body,
+    Delete,
+    Param,
+    NotFoundException,
+    Get,
     Put,
     Patch
 } from '@nestjs/common';
@@ -18,7 +18,7 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/s
 @ApiTags('Products')
 @Controller('products')
 export class ProductosControllers {
-    constructor(private readonly productsService: ProductosServices) {}
+    constructor(private readonly productsService: ProductosServices) { }
 
     @Post()
     @ApiOperation({ summary: 'Create a new product' })
@@ -86,11 +86,17 @@ export class ProductosControllers {
     }
 
     @Get()
-    @ApiOperation({ summary: 'Retrieve the list of all products' })
-    @ApiResponse({ status: 200, description: 'List of products successfully retrieved' })
+    @ApiOperation({ summary: 'Get the list of all products' })
+    @ApiResponse({ status: 200, description: 'Product list retrieved successfully' })
+    @ApiResponse({ status: 500, description: 'Internal server error' })
     async findAll(): Promise<Productos[]> {
-        return await this.productsService.findAllProdutos();
+        try {
+            return await this.productsService.findAllProdutos();
+        } catch (error) {
+            throw new NotFoundException('Failed to retrieve products');
+        }
     }
+
 
     @Get(':id')
     @ApiOperation({ summary: 'Retrieve a product by ID' })
@@ -198,7 +204,7 @@ export class ProductosControllers {
         type: String,
     })
     async removeSupplierFromProduct(
-        @Param('productId') productId: string, 
+        @Param('productId') productId: string,
         @Param('supplierId') supplierId: string
     ): Promise<Productos> {
         return await this.productsService.removeSupplierFromProduct(productId, supplierId);
@@ -220,7 +226,7 @@ export class ProductosControllers {
     })
 
     async addClientToProduct(
-        @Param('productId') productId: string, 
+        @Param('productId') productId: string,
         @Param('clientId') clientId: string
     ): Promise<Productos> {
         return await this.productsService.addClientToProduct(productId, clientId);
@@ -243,7 +249,7 @@ export class ProductosControllers {
 
 
     async removeClientFromProduct(
-        @Param('productId') productId: string, 
+        @Param('productId') productId: string,
         @Param('clientId') clientId: string
     ): Promise<Productos> {
         return await this.productsService.removeClientFromProduct(productId, clientId);

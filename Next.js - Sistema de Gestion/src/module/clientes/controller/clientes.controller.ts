@@ -30,11 +30,11 @@ export class ClientesController {
             example: {
                 summary: 'Example of creating a client',
                 value: {
-                    identification_number: '987654321',
-                    client_name: 'MaGs MaGs',
-                    client_email: 'mags.mags@gmail.com',
-                    client_phone: '987-6543',
-                    client_active: true
+                    numero_identificacion: '987654321',
+                    nombre_cliente: 'MaGs MaGs',
+                    email_cliente: 'mags.mags@gmail.com',
+                    celular_cliente: '987-6543',
+                    activo_cliente: true
                 },
             },
         },
@@ -86,10 +86,10 @@ export class ClientesController {
             example: {
                 summary: 'Example of updating a client',
                 value: {
-                    client_name: 'MaGs Updated',
-                    client_email: 'updated.email@gmail.com',
-                    client_phone: '123-4567',
-                    client_active: false
+                    nombre_cliente: 'MaGs Updated',
+                    email_cliente: 'updated.email@gmail.com',
+                    celular_cliente: '123-4567',
+                    activo_cliente: false
                 },
             },
         },
@@ -112,7 +112,7 @@ export class ClientesController {
             example: {
                 summary: 'Example of partial update',
                 value: {
-                    client_phone: '555-8888',
+                    celular_cliente: '555-8888',
                 },
             },
         },
