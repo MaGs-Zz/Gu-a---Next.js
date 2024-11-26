@@ -249,19 +249,19 @@ const ProveedorLista = () => {
                   >
                     {proveedor.activo_proveedor ? "Activo" : "Desactivado"}
                   </Typography>
-                  <UpdateButton onClick={() => handleOpenModal(proveedor.id)}>
+                  <UpdateButton onClick={() => handleOpenModal(proveedor)}>
                     Actualizar
                   </UpdateButton>
                   {proveedor.activo_proveedor ? (
-                    <DeactivateButton onClick={() => handleDeactivate(proveedor.id)}>
+                    <DeactivateButton onClick={() => handleDeactivate(proveedor._id)}>
                       Desactivar
                     </DeactivateButton>
                   ) : (
-                    <ActivateButton onClick={() => handleActivate(proveedor.id)}>
+                    <ActivateButton onClick={() => handleActivate(proveedor._id)}>
                       Activar
                     </ActivateButton>
                   )}
-                  <DeleteButton onClick={() => handleDelete(proveedor.id)}>
+                  <DeleteButton onClick={() => handleDelete(proveedor._id)}>
                     Eliminar
                   </DeleteButton>
                 </CardContent>

@@ -186,6 +186,7 @@ const ProductoLista: React.FC = () => {
   };
 
 
+
   const handleCloseEditModal = () => {
     setOpenEditModal(false);
     setProductoEditado(null);
@@ -503,6 +504,7 @@ const ProductoLista: React.FC = () => {
               <Button type="submit" variant="contained" color="primary" style={{ marginRight: '8px' }}>
                 Actualizar
               </Button>
+
               <Button variant="outlined" style={{ backgroundColor: 'red', color: 'white' }} onClick={handleCloseEditModal}>
                 Salir
               </Button>
