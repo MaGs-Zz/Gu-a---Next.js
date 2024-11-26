@@ -91,7 +91,7 @@ const ClienteLista = () => {
 
     const fetchClientes = async () => {
         try {
-            const respuesta = await fetch('https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/clients');
+            const respuesta = await fetch('http://localhost:3000/api/clients');
             if (!respuesta.ok) throw new Error('Error al obtener todos los clientes');
             const data = await respuesta.json();
             setClientes(data);
@@ -146,10 +146,10 @@ const ClienteLista = () => {
             let url;
             let method;
             if (actionType === 'create') {
-                url = 'https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/clients';
+                url = 'http://localhost:3000/api/clients';
                 method = 'POST';
             } else if (actionType === 'update') {
-                url = `https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/clients/update/${selectedCliente._id}`;
+                url = `http://localhost:3000/api/clients/update/${selectedCliente._id}`;
                 method = 'PUT';
             }
 
@@ -176,7 +176,7 @@ const ClienteLista = () => {
 
     const handleActivate = async (id: string) => {
         try {
-            await fetch(`https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/clients/active/${id}`, { method: 'PUT' });
+            await fetch(`http://localhost:3000/api/clients/activate/${id}`, { method: 'PUT' });
             fetchClientes();
         } catch (error) {
             console.error("Error al activar el cliente:", error);
@@ -185,7 +185,7 @@ const ClienteLista = () => {
 
     const handleDeactivate = async (id: string) => {
         try {
-            await fetch(`https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/clients/deactivate/${id}`, { method: 'PUT' });
+            await fetch(`http://localhost:3000/api/clients/deactivate/${id}`, { method: 'PUT' });
             fetchClientes();
         } catch (error) {
             console.error("Error al desactivar el cliente: ", error);
@@ -194,7 +194,7 @@ const ClienteLista = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            await fetch(`https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/clients/delete/${id}`, { method: 'DELETE' });
+            await fetch(`http://localhost:3000/api/clients/delete/${id}`, { method: 'DELETE' });
             fetchClientes();
         } catch (error) {
             console.error("Error al eliminar el cliente: ", error);

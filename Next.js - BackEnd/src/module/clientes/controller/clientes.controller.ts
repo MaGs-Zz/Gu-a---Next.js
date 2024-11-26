@@ -73,7 +73,7 @@ export class ClientesController {
         type: String,
     })
     async activate(@Param('id') id: string): Promise<void> {
-        await this.clientsService.active(id);
+        await this.clientsService.activate(id);
     }
     
     @Put('update/:id')

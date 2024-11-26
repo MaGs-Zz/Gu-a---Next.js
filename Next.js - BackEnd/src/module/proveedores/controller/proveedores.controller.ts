@@ -71,8 +71,8 @@ export class ProveedoresController{
         description: 'ID of the supplier to deactivate',
         type: String,
     })
-    async deactive(@Param('id') id: string): Promise<void>{
-        await this.proveedoresServies.deactive(id);
+    async deactivate(@Param('id') id: string): Promise<void>{
+        await this.proveedoresServies.deactivate(id);
     }
 
 
@@ -92,8 +92,8 @@ export class ProveedoresController{
         description: 'ID of the supplier to activate',
         type: String,
     })
-    async active(@Param('id') id: string): Promise<void>{
-        await this.proveedoresServies.active(id);
+    async activate(@Param('id') id: string): Promise<void>{
+        await this.proveedoresServies.activate(id);
     }
 
 

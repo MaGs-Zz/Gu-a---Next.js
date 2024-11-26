@@ -54,7 +54,7 @@ export class ProductosControllers {
         type: String,
     })
     async deactivate(@Param('id') id: string): Promise<void> {
-        await this.productsService.deactive(id);
+        await this.productsService.deactivate(id);
     }
 
     @Put('activate/:id')
@@ -67,7 +67,7 @@ export class ProductosControllers {
         type: String,
     })
     async activate(@Param('id') id: string): Promise<void> {
-        await this.productsService.active(id);
+        await this.productsService.activate(id);
     }
 
     //////////

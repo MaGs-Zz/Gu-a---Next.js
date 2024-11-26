@@ -49,7 +49,7 @@ export class ClientesService {
         return updatePartialCliente;
     }
 
-    async active (id:string): Promise<void>{
+    async activate (id:string): Promise<void>{
         const result = await this.clientesModel.findByIdAndUpdate(
             id, 
             {activo_cliente: true},

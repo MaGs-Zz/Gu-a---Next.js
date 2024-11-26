@@ -72,25 +72,25 @@ const ProductoLista: React.FC = () => {
   const [producto, setProducto] = useState<Productos | null>(null);
 
   const obtenerClientes = async () => {
-    const response = await fetch('https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/clients');
+    const response = await fetch('http://localhost:3000/api/clients');
     const data = await response.json();
     setClientes(data);
   };
 
   const obtenerProveedores = async () => {
-    const response = await fetch('https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/suppliers');
+    const response = await fetch('http://localhost:3000/api/suppliers');
     const data = await response.json();
     setProveedores(data);
   };
 
   const obtenerProductos = async () => {
-    const response = await fetch('https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products');
+    const response = await fetch('http://localhost:3000/api/products');
     const data = await response.json();
     setProductos(data);
   };
 
   const crearProducto = async (data: Omit<Productos, '_id'>) => {
-    const response = await fetch('https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products', {
+    const response = await fetch('http://localhost:3000/api/products', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ const ProductoLista: React.FC = () => {
       cancelButtonText: 'Cancelar',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await fetch(`https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products/delete/${id}`, {
+        const response = await fetch(`http://localhost:3000/api/products/delete/${id}`, {
           method: 'DELETE',
         });
 
@@ -193,7 +193,7 @@ const ProductoLista: React.FC = () => {
   };
 
   const actualizarProducto = async (id: string, data: Omit<Productos, 'id'>) => {
-    const response = await fetch(`https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products/update/${id}`, {
+    const response = await fetch(`http://localhost:3000/api/products/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ const ProductoLista: React.FC = () => {
 
   const toggleActivo = async (id: string, activo: boolean) => {
     const response = await fetch(
-      `https://special-space-rotary-phone-6994j95j5rw924rrw-3000.app.github.dev/api/products/${activo ? 'deactivate' : 'activate'}/${id}`,
+      `http://localhost:3000/api/products/${activo ? 'deactivate' : 'activate'}/${id}`,
       {
         method: 'PUT',
       }
@@ -322,23 +322,9 @@ const ProductoLista: React.FC = () => {
                       {producto.activo ? "Activo" : "Desactivado"}
                     </span>
                   </TableCell>
-
-                  <TableCell>
-                    {Array.isArray(producto.cliente) && producto.cliente.length > 0 ? (
-                      producto.cliente.map((cli) => <div key={cli.id_cliente}>{cli.nombre_cliente}</div>)
-                    ) : (
-                      "Sin clientes"
-                    )}
-                  </TableCell>
-
-                  <TableCell>
-                    {Array.isArray(producto.proveedor) && producto.proveedor.length > 0 ? (
-                      producto.proveedor.map((prov) => <div key={prov.id_proveedor}>{prov.nombre_proveedor}</div>)
-                    ) : (
-                      "Sin proveedores"
-                    )}
-                  </TableCell>
-
+                  <TableCell>{producto.cliente}</TableCell>
+                  
+                  <TableCell>{producto.proveedor}</TableCell>
                   <TableCell>
                     <Tooltip title="Editar producto">
                       <Button onClick={() => handleOpenEditModal(producto)}>

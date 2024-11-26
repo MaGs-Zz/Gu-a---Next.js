@@ -63,27 +63,27 @@ export class ProductosServices {
     }
 
 
-    async deactive(id: string): Promise<void> {
-        const deactiveProducto = await this.productosModel.findByIdAndUpdate(
+    async deactivate(id: string): Promise<void> {
+        const deactivateProducto = await this.productosModel.findByIdAndUpdate(
             id,
             { activo: false },
             { new: true })
             .populate('proveedor')
             .exec();
-        if (!deactiveProducto) {
+        if (!deactivateProducto) {
             throw new NotFoundException(`Producto con Id ${id} no se encontro`);
         }
     }
 
 
-    async active(id: string): Promise<void> {
-        const activeProducto = await this.productosModel.findByIdAndUpdate(
+    async activate(id: string): Promise<void> {
+        const activateProducto = await this.productosModel.findByIdAndUpdate(
             id,
             { activo: true },
             { new: true })
 
             .exec();
-        if (!activeProducto) {
+        if (!activateProducto) {
             throw new NotFoundException(`Producto con Id ${id} no se encontro`);
         }
     }
