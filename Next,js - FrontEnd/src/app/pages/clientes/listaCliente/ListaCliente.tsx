@@ -17,31 +17,41 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 
-const StyledCard = styled(Card)(({ theme }) => ({
+const StyledCard = styled(Card)({
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
     "&:hover": {
-        transform: "translateY(-8px)",
+        transform: "translateY(-5px)", // Movimiento al pasar el cursor
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)", // Sombra más prominente al pasar el cursor
     },
     width: "100%",
-    marginBottom: theme.spacing(3),
-    borderRadius: "20px",
-    backgroundColor: "#f9f9f9",
-    padding: theme.spacing(3),
-    [theme.breakpoints.up("md")]: {
+    marginBottom: "20px",
+    borderRadius: "8px",
+    backgroundColor: "#2c2c2c",
+    padding: "20px",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
+    color: "#fff",
+    border: "2px solid #444444",
+    "@media (min-width: 600px)": {
         width: "75%",
         margin: "auto",
     },
-}));
+});
 
-const ActionButton = styled(Button)(({ theme }) => ({
-    margin: theme.spacing(1),
-    padding: theme.spacing(1.5),
+
+
+const ActionButton = styled(Button)({
+    margin: "8px", // Reemplaza theme.spacing(1)
+    padding: "8px 16px", // Reemplaza theme.spacing(1.5)
     fontSize: "0.875rem",
     fontWeight: "bold",
     textTransform: "none",
     borderRadius: "10px",
     transition: "background-color 0.3s ease",
-}));
+    backgroundColor: "#4CAF50",
+    "&:hover": {
+        backgroundColor: "#388E3C",
+    },
+});
 
 const ActivateButton = styled(ActionButton)({
     backgroundColor: "#4caf50",
@@ -74,6 +84,15 @@ const UpdateButton = styled(ActionButton)({
         backgroundColor: "#1976d2",
     },
 });
+
+const StyledContainer = styled(Container)({
+    backgroundColor: "#121212",  // fondo oscuro para que combine con el navbar
+    paddingTop: "20px",
+    paddingBottom: "20px",
+    borderRadius: "8px",
+    fontFamily: "Roboto, sans-serif",
+});
+
 
 const ClienteLista = () => {
     const [clientes, setClientes] = useState([]);
@@ -207,9 +226,9 @@ const ClienteLista = () => {
     }
 
     return (
-        <Container maxWidth="lg" style={{ marginTop: "10px" }}>
+        <StyledContainer maxWidth="lg" style={{ marginTop: "70px" }}>
             <section style={{
-                background: "linear-gradient(135deg, #61a1bc 0%, #2575fc 100%)",
+                background: "linear-gradient(135deg, #333333 0%, #1a1a1a 100%)",
                 padding: "70px",
                 borderRadius: "100px",
                 color: "#fff"
@@ -218,7 +237,7 @@ const ClienteLista = () => {
                     variant="contained"
                     color="primary"
                     onClick={() => handleOpenModal()}
-                    style={{ marginBottom: "20px" }}
+                    style={{ marginBottom: "20px", backgroundColor: "#3f51b5" }}
                 >
                     Crear Cliente
                 </Button>
@@ -230,10 +249,10 @@ const ClienteLista = () => {
                                     <Typography variant="h6" component="div" gutterBottom>
                                         {cliente.nombre_cliente}
                                     </Typography>
-                                    <Typography variant="body1" color="textSecondary">
+                                    <Typography variant="body1" sx={{ color: '#ffffff' }}>
                                         Email: {cliente.email_cliente}
                                     </Typography>
-                                    <Typography variant="body1" color="textSecondary">
+                                    <Typography variant="body1" sx={{ color: '#ffffff' }}>
                                         Celular: {cliente.celular_cliente}
                                     </Typography>
                                     <Typography
@@ -245,21 +264,34 @@ const ClienteLista = () => {
                                     >
                                         {cliente.activo_cliente ? "Activo" : "Desactivado"}
                                     </Typography>
-                                    <UpdateButton onClick={() => handleOpenModal(cliente)}>
-                                        Actualizar
-                                    </UpdateButton>
-                                    {cliente.activo_cliente ? (
-                                        <DeactivateButton onClick={() => handleDeactivate(cliente._id)}>
-                                            Desactivar
-                                        </DeactivateButton>
-                                    ) : (
-                                        <ActivateButton onClick={() => handleActivate(cliente._id)}>
-                                            Activar
-                                        </ActivateButton>
-                                    )}
-                                    <DeleteButton onClick={() => handleDelete(cliente._id)}>
-                                        Eliminar
-                                    </DeleteButton>
+
+                                    <Grid container spacing={2} justifyContent="center">
+                                        <Grid item xs={4} display="flex" justifyContent="center">
+                                            <UpdateButton onClick={() => handleOpenModal(cliente)}>
+                                                Update
+                                            </UpdateButton>
+                                        </Grid>
+                                        <Grid item xs={4} display="flex" justifyContent="center">
+                                            {cliente.activo_cliente ? (
+                                                <DeactivateButton onClick={() => handleDeactivate(cliente._id)}>
+                                                    Disable
+                                                </DeactivateButton>
+                                            ) : (
+                                                <ActivateButton onClick={() => handleActivate(cliente._id)}>
+                                                    Enable
+                                                </ActivateButton>
+                                            )}
+                                        </Grid>
+                                        <Grid item xs={4} display="flex" justifyContent="center">
+                                            <DeleteButton onClick={() => handleDelete(cliente._id)}>
+                                                Delete
+                                            </DeleteButton>
+                                        </Grid>
+                                    </Grid>
+
+
+
+
                                 </CardContent>
                             </StyledCard>
                         </Grid>
@@ -312,7 +344,7 @@ const ClienteLista = () => {
                     {errorMessage}
                 </Alert>
             </Snackbar>
-        </Container>
+        </StyledContainer>
     );
 };
 
