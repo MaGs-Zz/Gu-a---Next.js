@@ -264,20 +264,21 @@ const ProductoLista: React.FC = () => {
 
   return (
     <Container
-      maxWidth='lg'
+      maxWidth="lg"
       style={{
-        marginTop: "20px",
+        marginTop: "80px",
         height: "90vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
-        background: "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)",
+        background: "linear-gradient(135deg, #121212 0%, #333333 100%)", // Gradiente oscuro
         paddingBottom: "20px",
       }}
     >
+
       <section style={{ width: '100%', position: 'relative' }}>
-        <Typography variant="h4" style={{ marginBottom: "30px", textAlign: "center", color: "#fff" }}>
+        <Typography variant="h4" style={{ marginBottom: "30px", textAlign: "left", color: "#fff" }}>
           Lista de Productos
         </Typography>
 
@@ -286,45 +287,45 @@ const ProductoLista: React.FC = () => {
           variant="contained"
           onClick={handleOpenModal}
           style={{
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            backgroundColor: "#6a11cb",
-            color: "#fff",
+            marginBottom: "20px", // Espaciado adicional
+            backgroundColor: "#3f51b5", // Mismo color que el segundo botón
+            color: "#fff", // Color de texto blanco
+            padding: "8px 16px",
+            // Opcional: ajustar el padding si es necesario
           }}
         >
           <AddIcon /> Agregar Producto
         </Button>
+
       </section>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{ backgroundColor: "#121212" }}>  {/* Fondo más oscuro para toda la tabla */}
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell style={{ color: "#6a11cb" }}>Nombre del Producto</TableCell>
-              <TableCell style={{ color: "#6a11cb" }}>Cantidad</TableCell>
-              <TableCell style={{ color: "#6a11cb" }}>Precio</TableCell>
-              <TableCell style={{ color: "#6a11cb" }}>Estado</TableCell>
-              <TableCell style={{ color: "#6a11cb" }}>Clientes Asociados</TableCell>
-              <TableCell style={{ color: "#6a11cb" }}>Proveedores Asociados</TableCell>
-              <TableCell style={{ color: "#6a11cb" }}>Acciones</TableCell>
+            <TableRow style={{ backgroundColor: "#333333" }}>  {/* Fondo oscuro para el encabezado */}
+              <TableCell style={{ color: "#fff" }}>Nombre del Producto</TableCell>
+              <TableCell style={{ color: "#fff" }}>Cantidad</TableCell>
+              <TableCell style={{ color: "#fff" }}>Precio</TableCell>
+              <TableCell style={{ color: "#fff" }}>Estado</TableCell>
+              <TableCell style={{ color: "#fff" }}>Clientes Asociados</TableCell>
+              <TableCell style={{ color: "#fff" }}>Proveedores Asociados</TableCell>
+              <TableCell style={{ color: "#fff" }}>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {Array.isArray(productos) && productos.length > 0 ? (
               productos.map((producto) => (
-                <TableRow key={producto._id}>
-                  <TableCell>{producto.nombre_producto}</TableCell>
-                  <TableCell>{producto.cantidad}</TableCell>
-                  <TableCell>${producto.precio}</TableCell>
+                <TableRow key={producto._id} style={{ backgroundColor: "#1c1c1c" }}>  {/* Fondo oscuro para las filas */}
+                  <TableCell style={{ color: "#fff" }}>{producto.nombre_producto}</TableCell>
+                  <TableCell style={{ color: "#fff" }}>{producto.cantidad}</TableCell>
+                  <TableCell style={{ color: "#fff" }}>${producto.precio}</TableCell>
                   <TableCell>
                     <span style={{ color: producto.activo ? "green" : "red", fontWeight: "bold" }}>
                       {producto.activo ? "Activo" : "Desactivado"}
                     </span>
                   </TableCell>
-                  <TableCell>{producto.cliente}</TableCell>
-                  
-                  <TableCell>{producto.proveedor}</TableCell>
+                  <TableCell style={{ color: "#fff" }}>{producto.cliente}</TableCell>
+                  <TableCell style={{ color: "#fff" }}>{producto.proveedor}</TableCell>
                   <TableCell>
                     <Tooltip title="Editar producto">
                       <Button onClick={() => handleOpenEditModal(producto)}>
@@ -351,13 +352,17 @@ const ProductoLista: React.FC = () => {
                 </TableRow>
               ))
             ) : (
-              <TableRow>
-                <TableCell colSpan={6}>No hay productos disponibles</TableCell>
+              <TableRow style={{ backgroundColor: "#1c1c1c" }}>  {/* Fondo oscuro para fila vacía */}
+                <TableCell colSpan={6} style={{ color: "#fff" }}>
+                  No hay productos disponibles
+                </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </TableContainer>
+
+
       {/* Modal para agregar producto */}
       <Modal open={openModal} onClose={handleCloseModal}>
         <Box sx={{ ...style, backgroundColor: 'white', color: 'black', padding: '20px', borderRadius: '8px' }}>
@@ -507,6 +512,7 @@ const ProductoLista: React.FC = () => {
       </Snackbar>
     </Container>
   );
+
 };
 
 export default ProductoLista;
