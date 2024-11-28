@@ -112,7 +112,7 @@ const Navbar = () => {
                 </SidebarItem>
                 <SidebarItem>
                     <Link href="/pages/proveedores" passHref style={{ color: "inherit", textDecoration: "none", width: "100%", display: "flex", alignItems: "center" }}>
-                    <ListItemIcon sx={{
+                        <ListItemIcon sx={{
                             color: "#FAFAFA", minWidth: "40px", fontSize: "1.5rem", transition: "color 0.3s ease",
                             "&:hover": {
                                 color: "#FFD700",
@@ -136,7 +136,7 @@ const Navbar = () => {
                 </SidebarItem>
                 <SidebarItem>
                     <Link href="/pages/clientes" passHref style={{ color: "inherit", textDecoration: "none", width: "100%", display: "flex", alignItems: "center" }}>
-                    <ListItemIcon sx={{
+                        <ListItemIcon sx={{
                             color: "#FAFAFA", minWidth: "40px", fontSize: "1.5rem", transition: "color 0.3s ease",
                             "&:hover": {
                                 color: "#FFD700",
@@ -160,7 +160,7 @@ const Navbar = () => {
                 </SidebarItem>
                 <SidebarItem>
                     <Link href="/pages/productos" passHref style={{ color: "inherit", textDecoration: "none", width: "100%", display: "flex", alignItems: "center" }}>
-                    <ListItemIcon sx={{
+                        <ListItemIcon sx={{
                             color: "#FAFAFA", minWidth: "40px", fontSize: "1.5rem", transition: "color 0.3s ease",
                             "&:hover": {
                                 color: "#FFD700",
@@ -184,9 +184,30 @@ const Navbar = () => {
                 </SidebarItem>
             </List>
             <SidebarDivider />
-            <Typography variant="caption" sx={{ textAlign: "center", display: "block", marginTop: "1rem", opacity: 0.7 }}>
-                Sistema de Gestión 2024
+            <Typography
+                variant="caption"
+                sx={{
+                    textAlign: "center",
+                    display: "block",
+                    marginTop: "1rem",
+                    opacity: 0.7,
+                    fontWeight: 500, // Añadido para mejorar la legibilidad
+                    fontSize: "0.875rem", // Ajuste de tamaño de fuente para claridad
+                }}
+            >
+                <span>Sistema de Gestión 2024</span>
+                <br />
+                <br />
+                <a
+                    href="https://github.com/MaGs-Zz/Gu-a---Next.js"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#1976d2", textDecoration: "none" }}
+                >
+                    Haz clic aquí para ver el repositorio en GitHub.
+                </a>
             </Typography>
+
         </SidebarContainer>
     );
 

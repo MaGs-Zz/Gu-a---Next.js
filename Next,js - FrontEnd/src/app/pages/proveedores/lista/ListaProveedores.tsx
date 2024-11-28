@@ -18,31 +18,39 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 
-const StyledCard = styled(Card)(({ theme }) => ({
+const StyledCard = styled(Card)({
   transition: "transform 0.3s ease, box-shadow 0.3s ease",
   "&:hover": {
-    transform: "translateY(-8px)",
+    transform: "translateY(-5px)",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
   },
   width: "100%",
-  marginBottom: theme.spacing(3),
-  borderRadius: "20px",
-  backgroundColor: "#f9f9f9",
-  padding: theme.spacing(3),
-  [theme.breakpoints.up("md")]: {
+  marginBottom: "20px",
+  borderRadius: "8px",
+  backgroundColor: "#2c2c2c",
+  padding: "20px",
+  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
+  color: "#fff",
+  border: "2px solid #444444",
+  "@media (min-width: 600px)": {
     width: "75%",
     margin: "auto",
   },
-}));
+});
 
-const ActionButton = styled(Button)(({ theme }) => ({
-  margin: theme.spacing(1),
-  padding: theme.spacing(1.5),
+const ActionButton = styled(Button)({
+  margin: "8px",
+  padding: "8px 16px",
   fontSize: "0.875rem",
   fontWeight: "bold",
   textTransform: "none",
   borderRadius: "10px",
   transition: "background-color 0.3s ease",
-}));
+  backgroundColor: "#4CAF50",
+  "&:hover": {
+    backgroundColor: "#388E3C",
+  },
+});
 
 const ActivateButton = styled(ActionButton)({
   backgroundColor: "#4caf50",
@@ -74,6 +82,14 @@ const UpdateButton = styled(ActionButton)({
   "&:hover": {
     backgroundColor: "#1976d2",
   },
+});
+
+const StyledContainer = styled(Container)({
+  backgroundColor: "#121212",  // fondo oscuro para que combine con el navbar
+  paddingTop: "20px",
+  paddingBottom: "20px",
+  borderRadius: "8px",
+  fontFamily: "Roboto, sans-serif",
 });
 
 const ProveedorLista = () => {
@@ -211,9 +227,9 @@ const ProveedorLista = () => {
   }
 
   return (
-    <Container maxWidth="lg" style={{ marginTop: "10px" }}>
+    <StyledContainer maxWidth="lg" style={{ marginTop: "70px" }}>
       <section style={{
-        background: "linear-gradient(135deg, #61a1bc 0%, #2575fc 100%)", // Gradiente de colores
+        background: "linear-gradient(135deg, #333333 0%, #1a1a1a 100%)", // Gradiente de colores
         padding: "70px",
         borderRadius: "100px", // Bordes redondeados
         color: "#fff" // Color del texto
@@ -222,7 +238,7 @@ const ProveedorLista = () => {
           variant="contained"
           color="primary"
           onClick={() => handleOpenModal()}
-          style={{ marginBottom: "20px" }} // Espaciado adicional
+          style={{ marginBottom: "20px", backgroundColor: "#3f51b5" }} // Espaciado adicional
         >
           Crear Proveedor
         </Button>
@@ -234,10 +250,10 @@ const ProveedorLista = () => {
                   <Typography variant="h6" component="div" gutterBottom>
                     {proveedor.nombre_proveedor}
                   </Typography>
-                  <Typography variant="body1" color="textSecondary">
+                  <Typography variant="body1" sx={{ color: '#ffffff' }}>
                     Email: {proveedor.email_proveedor}
                   </Typography>
-                  <Typography variant="body1" color="textSecondary">
+                  <Typography variant="body1" sx={{ color: '#ffffff' }}>
                     Celular: {proveedor.celular_proveedor}
                   </Typography>
                   <Typography
@@ -249,21 +265,33 @@ const ProveedorLista = () => {
                   >
                     {proveedor.activo_proveedor ? "Activo" : "Desactivado"}
                   </Typography>
-                  <UpdateButton onClick={() => handleOpenModal(proveedor)}>
-                    Actualizar
-                  </UpdateButton>
-                  {proveedor.activo_proveedor ? (
-                    <DeactivateButton onClick={() => handleDeactivate(proveedor._id)}>
-                      Desactivar
-                    </DeactivateButton>
-                  ) : (
-                    <ActivateButton onClick={() => handleActivate(proveedor._id)}>
-                      Activar
-                    </ActivateButton>
-                  )}
-                  <DeleteButton onClick={() => handleDelete(proveedor._id)}>
-                    Eliminar
-                  </DeleteButton>
+
+                  <Grid container spacing={2} justifyContent="center">
+                    <Grid item xs={4} display="flex" justifyContent="center">
+
+                      <UpdateButton onClick={() => handleOpenModal(proveedor)}>
+                        Update
+                      </UpdateButton>
+
+                    </Grid>
+                    <Grid item xs={4} display="flex" justifyContent="center">
+
+                      {proveedor.activo_proveedor ? (
+                        <DeactivateButton onClick={() => handleDeactivate(proveedor._id)}>
+                          Disable
+                        </DeactivateButton>
+                      ) : (
+                        <ActivateButton onClick={() => handleActivate(proveedor._id)}>
+                          Enable
+                        </ActivateButton>
+                      )}
+                    </Grid>
+                    <Grid item xs={4} display="flex" justifyContent="center">
+                      <DeleteButton onClick={() => handleDelete(proveedor._id)}>
+                        Delete
+                      </DeleteButton>
+                    </Grid>
+                  </Grid>
                 </CardContent>
               </StyledCard>
             </Grid>
@@ -311,7 +339,7 @@ const ProveedorLista = () => {
           {errorMessage || "Operación exitosa"}
         </Alert>
       </Snackbar>
-    </Container>
+    </StyledContainer>
   );
 
 }
