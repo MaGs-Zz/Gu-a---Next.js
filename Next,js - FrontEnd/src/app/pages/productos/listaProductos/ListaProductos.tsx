@@ -72,25 +72,25 @@ const ProductoLista: React.FC = () => {
   const [producto, setProducto] = useState<Productos | null>(null);
 
   const obtenerClientes = async () => {
-    const response = await fetch('http://localhost:3000/api/clients');
+    const response = await fetch('https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/clients');
     const data = await response.json();
     setClientes(data);
   };
 
   const obtenerProveedores = async () => {
-    const response = await fetch('http://localhost:3000/api/suppliers');
+    const response = await fetch('https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/suppliers');
     const data = await response.json();
     setProveedores(data);
   };
 
   const obtenerProductos = async () => {
-    const response = await fetch('http://localhost:3000/api/products');
+    const response = await fetch('https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/products');
     const data = await response.json();
     setProductos(data);
   };
 
   const crearProducto = async (data: Omit<Productos, '_id'>) => {
-    const response = await fetch('http://localhost:3000/api/products', {
+    const response = await fetch('https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/products', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ const ProductoLista: React.FC = () => {
       cancelButtonText: 'Cancelar',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await fetch(`http://localhost:3000/api/products/delete/${id}`, {
+        const response = await fetch(`https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/products/delete/${id}`, {
           method: 'DELETE',
         });
 
@@ -193,7 +193,7 @@ const ProductoLista: React.FC = () => {
   };
 
   const actualizarProducto = async (id: string, data: Omit<Productos, 'id'>) => {
-    const response = await fetch(`http://localhost:3000/api/products/update/${id}`, {
+    const response = await fetch(`https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/products/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ const ProductoLista: React.FC = () => {
 
   const toggleActivo = async (id: string, activo: boolean) => {
     const response = await fetch(
-      `http://localhost:3000/api/products/${activo ? 'deactivate' : 'activate'}/${id}`,
+      `https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/products/${activo ? 'deactivate' : 'activate'}/${id}`,
       {
         method: 'PUT',
       }

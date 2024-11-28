@@ -93,7 +93,7 @@ const ProveedorLista = () => {
 
   const fetchProveedores = async () => {
     try {
-      const respuesta = await fetch('http://localhost:3000/api/Suppliers');
+      const respuesta = await fetch('https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/Suppliers');
       if (!respuesta.ok) throw new Error('Error al obtener todos los proveedores');
       const data = await respuesta.json();
       setProveedores(data);
@@ -149,10 +149,10 @@ const ProveedorLista = () => {
       let url;
       let method;
       if (actionType === 'create') {
-        url = 'http://localhost:3000/api/Suppliers';
+        url = 'https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/Suppliers';
         method = 'POST';
       } else if (actionType === 'update') {
-        url = `http://localhost:3000/api/Suppliers/update/${selectedProveedor._id}`;
+        url = `https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/Suppliers/update/${selectedProveedor._id}`;
         method = 'PUT';
       }
 
@@ -180,7 +180,7 @@ const ProveedorLista = () => {
 
   const handleActivate = async (id: string) => {
     try {
-      await fetch(`http://localhost:3000/api/Suppliers/activate/${id}`, { method: 'PUT' });
+      await fetch(`https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/Suppliers/activate/${id}`, { method: 'PUT' });
       fetchProveedores();
     } catch (error) {
       console.error("Error al activar el proveedor:", error);
@@ -189,7 +189,7 @@ const ProveedorLista = () => {
 
   const handleDeactivate = async (id: string) => {
     try {
-      await fetch(`http://localhost:3000/api/Suppliers/deactivate/${id}`, { method: 'PUT' });
+      await fetch(`https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/Suppliers/deactivate/${id}`, { method: 'PUT' });
       fetchProveedores();
     } catch (error) {
       console.error("Error al desactivar el proveedor: ", error);
@@ -198,7 +198,7 @@ const ProveedorLista = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await fetch(`http://localhost:3000/api/Suppliers/delete/${id}`, { method: 'DELETE' });
+      await fetch(`https://humble-computing-machine-x55vj5pjp9j5hp9j4-3000.app.github.dev/api/Suppliers/delete/${id}`, { method: 'DELETE' });
       fetchProveedores();
     } catch (error) {
       console.error("Erroor al eliminar al proveedor: ", error);
