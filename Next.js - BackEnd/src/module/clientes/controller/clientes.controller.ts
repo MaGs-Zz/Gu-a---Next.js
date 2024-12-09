@@ -1,26 +1,38 @@
-import { 
-    Controller, 
-    Post, 
-    Body, 
-    Delete, 
-    Param, 
-    NotFoundException, 
-    Get, 
+import {
+    Controller,
+    Post,
+    Body,
+    Delete,
+    Param,
+    NotFoundException,
+    Get,
     Put,
-    Patch
+    Patch,
+    Req,
+    UseGuards,
 } from '@nestjs/common';
 import { UpdateClientesDto } from '../dto/update-clientes.dto';
 import { CreateClientesDto } from '../dto/create-clientes.dto';
 import { ClientesService } from '../service/clientes.service';
 import { Clientes } from '../schema/clientes.schema';
+import { AuthGuard } from '@nestjs/passport';
+import { Roles } from '../../auth/decorators/role.decorator';
+import { ERole } from '../../auth/enum/role.enum';
+import { RolesGuard } from '../../auth/guards/role.guards';
+import { SkipThrottle } from '@nestjs/throttler';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('Clients')
-@Controller('clients') // Defines the base route
-export class ClientesController {
-    constructor(private readonly clientsService: ClientesService) {}
+@Controller('clients') 
 
-    @Post()
+export class ClientesController {
+    constructor(private readonly clientsService: ClientesService) { }
+
+    @Get()
+    @SkipThrottle()
+    //@Roles(ERole.MODERATOR, ERole.ADMIN, ERole.USER) 
+    //@UseGuards(AuthGuard(), RolesGuard) 
+
     @ApiOperation({ summary: 'Create a new client' })
     @ApiResponse({ status: 201, description: 'Client successfully created' })
     @ApiResponse({ status: 400, description: 'Bad request' })
@@ -39,8 +51,11 @@ export class ClientesController {
             },
         },
     })
-    async create(@Body() createClientsDto: CreateClientesDto): Promise<Clientes> {
-        return this.clientsService.createCliente(createClientsDto);
+    async create(
+        @Body() createClientsDto: CreateClientesDto, 
+        @Req() req 
+    ): Promise<Clientes> {
+        return this.clientsService.createCliente(createClientsDto, req.user);
     }
 
     @Get(':id')
@@ -57,6 +72,8 @@ export class ClientesController {
     }
 
     @Get()
+    //@Roles(ERole.MODERATOR, ERole.ADMIN, ERole.USER) // Define los roles permitidos
+    //@UseGuards(AuthGuard(), RolesGuard)
     @ApiOperation({ summary: 'Retrieve the list of all clients' })
     @ApiResponse({ status: 200, description: 'List of clients successfully retrieved' })
     async findAll(): Promise<Clientes[]> {
@@ -75,7 +92,7 @@ export class ClientesController {
     async activate(@Param('id') id: string): Promise<void> {
         await this.clientsService.activate(id);
     }
-    
+
     @Put('update/:id')
     @ApiOperation({ summary: 'Update a client by ID' })
     @ApiResponse({ status: 200, description: 'Client successfully updated' })

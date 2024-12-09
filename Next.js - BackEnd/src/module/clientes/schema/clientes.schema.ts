@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { IClientes } from '../interface/clientes.inteface';
-
+import { User } from 'src/module/auth/schema/auth.schema';
 @Schema()
 export class Clientes extends Document implements IClientes{
     
@@ -19,6 +19,9 @@ export class Clientes extends Document implements IClientes{
 
     @Prop({default: true})
     activo_cliente?: boolean;
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+    user: User;
 
 }
 

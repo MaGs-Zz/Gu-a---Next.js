@@ -5,14 +5,17 @@ import { Model } from 'mongoose';
 import { Clientes } from '../schema/clientes.schema';
 import { CreateClientesDto } from '../dto/create-clientes.dto';
 import { UpdateClientesDto } from '../dto/update-clientes.dto';
-
+import { User } from 'src/module/auth/schema/auth.schema';
 @Injectable()
 export class ClientesService {
     constructor(@InjectModel(Clientes.name) private clientesModel: Model<Clientes>) {}
 
     // Método para crear un nuevo cliente
-    async createCliente(createClientesDto: CreateClientesDto): Promise<Clientes> {
-        const createCliente = new this.clientesModel(createClientesDto);
+    async createCliente(createClientesDto: CreateClientesDto, user: User): Promise<Clientes> {
+        // Combina los datos del DTO con la referencia del usuario
+        const data = Object.assign(createClientesDto, { user: user._id });
+        // Crea un nuevo cliente con la información combinada
+        const createCliente = new this.clientesModel(data);
         return createCliente.save();
     }
 

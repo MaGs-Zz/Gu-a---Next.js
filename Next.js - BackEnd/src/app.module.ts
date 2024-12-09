@@ -4,7 +4,6 @@ import { ProveedoresModule } from './module/proveedores/proveedores.module';
 import { ClientesModule } from './module/clientes/clientes.module';
 import { ProductosModule } from './module/productos/productos.module';
 import { AuthModule } from './module/auth/auth.module';
-import { BookModule } from './module/book/book.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule } from '@nestjs/config';
 
@@ -24,7 +23,6 @@ import { ConfigModule } from '@nestjs/config';
     ClientesModule,
     ProductosModule,
     AuthModule,
-    BookModule,
   ],
 })
 export class AppModule {}
